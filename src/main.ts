@@ -21,6 +21,7 @@ const imageUrls = [
     "/tile8.png"
 ];
 
+//let currentTile = 0;
 
 //defining the size of the main grid
 const numTiles = 32;
@@ -45,8 +46,17 @@ for(let i = 0; i < numTiles; i++) {
     tilemap[i] = row;
 }
 
+const svg: HTMLElement = create("svg");
+const svgContainer: HTMLElement | null = document.getElementById("svgContainer");
+
+
+function create(elementNone: any) {
+    return document.createElementNS("http://www.w3.org/2000/svg", elementNone);
+}
+
+
 //track the selected tile
-let currentTile = "/tile1.png";
+let currentTile = 0;
 
 //draw the initial canvases
 redrawTilemap();
@@ -79,7 +89,7 @@ gridCanvas.addEventListener("click", (e) => {
     const coordX = Math.trunc(e.offsetX / tileSize);
     const coordY = Math.trunc(e.offsetY / tileSize);
 
-    tilemap[coordX][coordY].src = currentTile;
+    tilemap[coordX][coordY].src = imageUrls[currentTile];
     redrawTilemap();
 })
 
@@ -97,6 +107,8 @@ function drawSelectCanvas()
 }
 
 selectCanvas.addEventListener("click", (e) => {
+    //const coordX = Math.trunc(e.offsetX / tileSize);
     const coordY = Math.trunc(e.offsetY / selectHeight);
-    currentTile = imageUrls[coordY];
+    currentTile = coordY;
+    console.log(coordY);
 })
